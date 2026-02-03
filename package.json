@@ -1,0 +1,59 @@
+{
+    "name": "n8n-nodes-adp",
+    "version": "0.1.1",
+    "description": "n8n community nodes for ADP (Agentic Document Processor) - AI-powered document extraction",
+    "license": "MIT",
+    "homepage": "https://adp.laiye.com",
+    "keywords": [
+        "n8n-community-node-package",
+        "document-processing",
+        "AI",
+        "OCR",
+        "extraction",
+        "ADP"
+    ],
+    "author": {
+        "name": "laiye",
+        "email": "global_product@laiye.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://git.laiye.com/laiye-rpa-ai-repos/n8n-nodes-adp.git"
+    },
+    "scripts": {
+        "build": "n8n-node build",
+        "build:watch": "tsc --watch",
+        "dev": "n8n-node dev",
+        "lint": "n8n-node lint",
+        "lint:fix": "n8n-node lint --fix",
+        "release": "n8n-node release",
+        "prepublishOnly": "n8n-node prerelease"
+    },
+    "files": [
+        "dist"
+    ],
+    "n8n": {
+        "n8nNodesApiVersion": 1,
+        "strict": false,
+        "credentials": [
+            "dist/credentials/ADPApi.credentials.js"
+        ],
+        "nodes": [
+            "dist/nodes/ADPOverseasExtract/AdpOverseasExtract.node.js"
+        ]
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "@n8n/node-cli": "*",
+        "@types/node": "^25.1.0",
+        "@types/node-fetch": "^2.6.13",
+        "@types/uuid": "^9.0.0",
+        "eslint": "9.32.0",
+        "prettier": "3.6.2",
+        "release-it": "^19.0.4",
+        "typescript": "5.9.2"
+    },
+    "peerDependencies": {
+        "n8n-workflow": "*"
+    }
+}
