@@ -27,46 +27,96 @@ export class AdpOverseasExtract implements INodeType {
 			},
 		],
 		properties: [
-			{
-				displayName: 'Input Source',
-				name: 'inputSource',
-				type: 'options',
-				options: [
-					{
-						name: 'From Previous Node (Binary File)',
-						value: 'binary',
-						description: 'Use binary file from previous node (recommended)',
-					},
-					{
-						name: 'From URL',
-						value: 'url',
-						description: 'Provide file URL manually',
-					},
-				],
-				default: 'binary',
-				description: 'Where to get the file from',
-			},
-			{
-				displayName: 'File URL',
-				name: 'fileUrl',
-				type: 'string',
-				displayOptions: {
-					show: {
-						inputSource: ['url'],
-					},
-				},
-				default: '',
-				placeholder: 'https://example.com/invoice.pdf',
-				description: 'The URL of the file to process',
-			},
-			{
-				displayName: 'With Recognition Result',
-				name: 'withRecResult',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to include OCR recognition results in response',
-			},
-		],
+            {
+                displayName: 'Resource',
+                name: 'resource',
+                type: 'options',
+                noDataExpression: true,
+                options: [
+                    {
+                        name: 'Document',
+                        value: 'document',
+                        description: 'Process overseas documents',
+                    },
+                ],
+                default: 'document',
+                required: true,
+            },
+            {
+                displayName: 'Operation',
+                name: 'operation',
+                type: 'options',
+                noDataExpression: true,
+                displayOptions: {
+                    show: {
+                        resource: ['document'],
+                    },
+                },
+                options: [
+                    {
+                        name: 'Extract',
+                        value: 'extract',
+                        description: 'Extract data from overseas invoices, receipts, and purchase orders',
+                        action: 'Extract data from document',
+                    },
+                ],
+                default: 'extract',
+                required: true,
+            },
+            {
+                displayName: 'Input Source',
+                name: 'inputSource',
+                type: 'options',
+                options: [
+                    {
+                        name: 'From Previous Node (Binary File)',
+                        value: 'binary',
+                        description: 'Use binary file from previous node (recommended)',
+                    },
+                    {
+                        name: 'From URL',
+                        value: 'url',
+                        description: 'Provide file URL manually',
+                    },
+                ],
+                default: 'binary',
+                description: 'Where to get the file from',
+                displayOptions: {
+                    show: {
+                        resource: ['document'],
+                        operation: ['extract'],
+                    },
+                },
+            },
+            {
+                displayName: 'File URL',
+                name: 'fileUrl',
+                type: 'string',
+                displayOptions: {
+                    show: {
+                        resource: ['document'],
+                        operation: ['extract'],
+                        inputSource: ['url'],
+                    },
+                },
+                default: '',
+                placeholder: 'https://example.com/invoice.pdf',
+                description: 'The URL of the file to process',
+            },
+            {
+                displayName: 'With Recognition Result',
+                name: 'withRecResult',
+                type: 'boolean',
+                default: false,
+                description: 'Whether to include OCR recognition results in response',
+                displayOptions: {
+                    show: {
+                        resource: ['document'],
+                        operation: ['extract'],
+                    },
+                },
+            },
+	    ],
 	};
 
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {

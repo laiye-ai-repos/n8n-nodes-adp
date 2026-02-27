@@ -1,7 +1,8 @@
-import {
+import type {
 	IAuthenticateGeneric,
 	ICredentialTestRequest,
 	ICredentialType,
+	INodeProperties,
 	Icon,
 } from 'n8n-workflow';
 
@@ -10,11 +11,11 @@ export class ADPApi implements ICredentialType {
 	displayName = 'ADP API';
 	documentationUrl = 'https://docs.adp.example.com';
 	icon: Icon = 'file:icon.svg';
-	properties = [
+	properties: INodeProperties[] = [
 		{
 			displayName: 'Base URL',
 			name: 'baseUrl',
-			type: 'string' as const,
+			type: 'string',
 			default: 'https://adp.laiye.com',
 			required: true,
 			description: 'The base URL of the ADP API',
@@ -22,7 +23,7 @@ export class ADPApi implements ICredentialType {
 		{
 			displayName: 'Access Key',
 			name: 'accessKey',
-			type: 'string' as const,
+			type: 'string',
 			typeOptions: { password: true },
 			default: '',
 			required: true,
@@ -31,7 +32,7 @@ export class ADPApi implements ICredentialType {
 		{
 			displayName: 'App Key',
 			name: 'appKey',
-			type: 'string' as const,
+			type: 'string',
 			typeOptions: { password: true },
 			default: '',
 			required: true,
@@ -40,7 +41,7 @@ export class ADPApi implements ICredentialType {
 		{
 			displayName: 'App Secret',
 			name: 'appSecret',
-			type: 'string' as const,
+			type: 'string',
 			typeOptions: { password: true },
 			default: '',
 			required: true,
@@ -49,7 +50,7 @@ export class ADPApi implements ICredentialType {
 		{
 			displayName: 'Tenant Name',
 			name: 'tenantName',
-			type: 'string' as const,
+			type: 'string',
 			default: 'laiye',
 			required: false,
 			description: 'Tenant name (defaults to "laiye")',
@@ -57,7 +58,15 @@ export class ADPApi implements ICredentialType {
 	];
 	authenticate: IAuthenticateGeneric = {
 		type: 'generic',
-		properties: {},
+		properties: {
+			headers: {
+				'X-Access-Key': '={{$credentials.accessKey}}',
+			},
+			body: {
+				app_key: '={{$credentials.appKey}}',
+				app_secret: '={{$credentials.appSecret}}',
+			},
+		},
 	};
 	test: ICredentialTestRequest = {
 		request: {
