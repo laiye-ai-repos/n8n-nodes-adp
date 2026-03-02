@@ -1,6 +1,6 @@
 {
     "name": "n8n-nodes-adp",
-    "version": "0.2.0",
+    "version": "0.2.2",
     "description": "n8n community nodes for ADP (Agentic Document Processor) - AI-powered document extraction",
     "license": "MIT",
     "homepage": "https://adp.laiye.com",
@@ -26,8 +26,7 @@
         "dev": "n8n-node dev",
         "lint": "n8n-node lint",
         "lint:fix": "n8n-node lint --fix",
-        "release": "n8n-node release",
-        "prepublishOnly": "n8n-node prerelease"
+        "release": "n8n-node release"
     },
     "files": [
         "dist"
@@ -46,7 +45,6 @@
     "devDependencies": {
         "@n8n/node-cli": "*",
         "@types/node": "^25.1.0",
-        "@types/node-fetch": "^2.6.13",
         "@types/uuid": "^9.0.0",
         "eslint": "9.32.0",
         "prettier": "3.6.2",

@@ -141,28 +141,23 @@ export class AdpOverseasExtract implements INodeType {
 				let fileUrl = '';
 
 				if (inputSource === 'binary') {
-					// Get binary data from previous node
-					const item = items[itemIndex];
-
-					// Check if binary data exists
-					if (!item.binary || !item.binary.data) {
-						throw new NodeOperationError(
+					// Get binary data from previous node using helper for compatibility
+					const binaryData = await this.helpers.getBinaryDataBuffer(itemIndex, 'data');
+                    if (!binaryData) {
+                        throw new NodeOperationError(
 							this.getNode(),
 							'No binary file found in input. Please make sure the previous node outputs a binary file.',
 							{ itemIndex }
 						);
-					}
+                    }
 
-					// Convert binary buffer to base64
+                	// Convert binary buffer to base64
 					// binary.data can be a Buffer or string
-					const binaryData = item.binary.data;
-					if (Buffer.isBuffer(binaryData)) {
+                    if (Buffer.isBuffer(binaryData)) {
 						fileBase64 = binaryData.toString('base64');
 					} else if (typeof binaryData === 'string') {
 						// Already base64 encoded
 						fileBase64 = binaryData;
-					} else if (binaryData instanceof ArrayBuffer) {
-						fileBase64 = Buffer.from(binaryData).toString('base64');
 					} else {
 						// Try to convert any other type
 						fileBase64 = Buffer.from(String(binaryData)).toString('base64');
@@ -182,6 +177,7 @@ export class AdpOverseasExtract implements INodeType {
 					'X-Timestamp': timestamp,
 					'X-Signature': signature,
 					'Content-Type': 'application/json',
+					'utm': 'n8n',
 				};
 
 				// Prepare request body
