@@ -1,5 +1,4 @@
 import type {
-	IAuthenticateGeneric,
 	ICredentialTestRequest,
 	ICredentialType,
 	INodeProperties,
@@ -56,18 +55,6 @@ export class ADPApi implements ICredentialType {
 			description: 'Tenant name (defaults to "laiye")',
 		},
 	];
-	authenticate: IAuthenticateGeneric = {
-		type: 'generic',
-		properties: {
-			headers: {
-				'X-Access-Key': '={{$credentials.accessKey}}',
-			},
-			body: {
-				app_key: '={{$credentials.appKey}}',
-				app_secret: '={{$credentials.appSecret}}',
-			},
-		},
-	};
 	test: ICredentialTestRequest = {
 		request: {
 			baseURL: '={{$credentials.baseUrl}}',
