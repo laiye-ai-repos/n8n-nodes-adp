@@ -58,7 +58,7 @@ export class ADPApi implements ICredentialType {
 	test: ICredentialTestRequest = {
 		request: {
 			baseURL: '={{$credentials.baseUrl}}',
-			url: '/open/agentic_doc_processor/{{$credentials.tenantName}}/v1/app/doc/extract',
+			url: '=/open/agentic_doc_processor/{{$credentials.tenantName}}/v1/app/doc/extract',
 			method: 'POST',
 			body: {
 				app_key: '={{$credentials.appKey}}',
